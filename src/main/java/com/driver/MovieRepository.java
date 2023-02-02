@@ -49,16 +49,24 @@ public class MovieRepository {
 
     //Pass movie name and director name as request parameters
     public void addMovieDirectorPair(String movieName, String directorName){
+//        if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
+//            if(pairDB.containsKey(directorName)){
+//                List<String> list = pairDB.get(directorName);
+//                list.add(movieName);
+//                return;
+//            }
+//            List<String> list = new ArrayList<>();
+//            list.add(movieName);
+//
+//            pairDB.put(directorName, list);
+//        }
         if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
-            if(pairDB.containsKey(directorName)){
-                List<String> list = pairDB.get(directorName);
-                list.add(movieName);
-                return;
+            List<String> currentMovies = new ArrayList<>();
+            if(pairDB.containsKey(directorName)) {
+                currentMovies = pairDB.get(directorName);
             }
-            List<String> list = new ArrayList<>();
-            list.add(movieName);
-
-            pairDB.put(directorName, list);
+            currentMovies.add(movieName);
+            pairDB.put(directorName, currentMovies);
         }
 
     }
@@ -90,6 +98,7 @@ public class MovieRepository {
             pairDB.remove(directorName);
             return "Deleted";
         }
+        directorDB.remove(directorName);
         return "Invalid Input";
 
     }
