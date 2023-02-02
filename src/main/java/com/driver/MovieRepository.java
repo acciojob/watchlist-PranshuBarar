@@ -49,15 +49,18 @@ public class MovieRepository {
 
     //Pass movie name and director name as request parameters
     public void addMovieDirectorPair(String movieName, String directorName){
-        if(pairDB.containsKey(directorName)){
-            List<String> list = pairDB.get(directorName);
+        if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
+            if(pairDB.containsKey(directorName)){
+                List<String> list = pairDB.get(directorName);
+                list.add(movieName);
+                return;
+            }
+            List<String> list = new ArrayList<>();
             list.add(movieName);
-            return;
-        }
-        List<String> list = new ArrayList<>();
-        list.add(movieName);
 
-        pairDB.put(directorName, list);
+            pairDB.put(directorName, list);
+        }
+
     }
 
     /*Get List of movies name for a given director name: GET /movies/get-movies-by-director-name/{director}
@@ -65,7 +68,10 @@ public class MovieRepository {
     Return List of movies name(List()) wrapped in a ResponseEntity object
     Controller Name - getMoviesByDirectorName*/
     public List<String> getMoviesByDirectorName(String directorName){
-        List<String> list = pairDB.get(directorName);
+        List<String> list = new ArrayList<>();
+        if(pairDB.containsKey(directorName)){
+            list = pairDB.get(directorName);
+        }
         return list;
     }
 
