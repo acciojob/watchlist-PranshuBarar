@@ -12,7 +12,7 @@ import java.util.Map;
 public class MovieRepository {
     Map<String,Movie> movieDB = new HashMap<>();
     Map<String,Director> directorDB = new HashMap<>();
-    Map<String,List<Movie>> pairDB = new HashMap<>();
+    Map<String,List<String>> pairDB = new HashMap<>();
 
     public String addMovie(Movie movie){
         String name = movie.getName();
@@ -55,17 +55,17 @@ public class MovieRepository {
         Movie movie = movieDB.get(movieName);
 
         if(pairDB.containsKey(directorName)){
-            for(Movie m : pairDB.get(directorName)){
-                if(m.getName().equals(movieName)){
+            for(String m : pairDB.get(directorName)){
+                if(m.equals(movieName)){
                     return;
                 }
             }
-            List<Movie> list = pairDB.get(directorName);
-            list.add(movie);
+            List<String> list = pairDB.get(directorName);
+            list.add(movieName);
             return;
         }
-        List<Movie> list = new ArrayList<>();
-        list.add(movie);
+        List<String> list = new ArrayList<>();
+        list.add(movieName);
 
         pairDB.put(directorName, list);
     }
@@ -78,12 +78,7 @@ public class MovieRepository {
         if(!pairDB.containsKey(directorName)){
             return new ArrayList<>();
         }
-        List<Movie> list = pairDB.get(directorName);
-        List<String> nameList = new ArrayList<>();
-        for(Movie movie : list){
-            nameList.add(movie.getName());
-        }
-        return nameList;
+        return pairDB.get(directorName);
     }
 
     /*Delete a director and its movies from the records: DELETE /movies/delete-director-by-name
