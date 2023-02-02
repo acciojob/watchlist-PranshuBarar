@@ -81,6 +81,12 @@ public class MovieRepository {
     Controller Name - deleteDirectorByName*/
     public String deleteDirectorByName(String directorName){
         if(pairDB.containsKey(directorName)){
+            List<String> movieList = pairDB.get(directorName);
+            for(String m : movieList){
+                if(movieDB.containsKey(m)){
+                    movieDB.remove(m);
+                }
+            }
             pairDB.remove(directorName);
             return "Deleted";
         }
