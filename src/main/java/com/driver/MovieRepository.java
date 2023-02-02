@@ -11,13 +11,10 @@ public class MovieRepository {
     Map<String,Director> directorDB = new HashMap<>();
     Map<String,List<String>> pairDB = new HashMap<>();
 
-    public String addMovie(Movie movie){
+    public void addMovie(Movie movie){
         String name = movie.getName();
-        if(!movieDB.containsKey(name)){
-            movieDB.put(name,movie);
-            return "Added";
-        }
-        return "Already there";
+        movieDB.put(name,movie);
+
     }
 
     public Movie getMovieByName(String name){
@@ -31,13 +28,9 @@ public class MovieRepository {
         return new ArrayList<>(movieDB.keySet());
     }
 
-    public String addDirector(Director director){
+    public void addDirector(Director director){
         String name = director.getName();
-        if(directorDB.containsKey(name)){
-            return "Already there";
-        }
         directorDB.put(name,director);
-        return "Added";
     }
 
     public Director getDirectorByName(String directorName){
@@ -87,7 +80,7 @@ public class MovieRepository {
     Pass director’s name as request parameter
     Return success message wrapped in a ResponseEntity object
     Controller Name - deleteDirectorByName*/
-    public String deleteDirectorByName(String directorName){
+    public void deleteDirectorByName(String directorName){
         if(pairDB.containsKey(directorName)){
             List<String> movieList = pairDB.get(directorName);
             for(String m : movieList){
@@ -96,10 +89,8 @@ public class MovieRepository {
                 }
             }
             pairDB.remove(directorName);
-            return "Deleted";
         }
         directorDB.remove(directorName);
-        return "Invalid Input";
 
     }
 

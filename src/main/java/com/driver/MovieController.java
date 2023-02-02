@@ -19,20 +19,14 @@ public class MovieController {
     //working
     @PostMapping("/movies/add-movie")
     public ResponseEntity addMovie(@RequestBody Movie movie){
-        String result = movieService.addMovie(movie);
-        if(result.equals("Added")){
-            return new ResponseEntity<>("Added", HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>("Already there", HttpStatus.BAD_REQUEST);
+        movieService.addMovie(movie);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
     //working
     @GetMapping("/movies/get-movie-by-name/{name}")
     public ResponseEntity getMovieByName(@PathVariable("name") String name){
         Movie movie = movieService.getMovieByName(name);
-        if(movie == null){
-            return new ResponseEntity<>(movie, HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(movie, HttpStatus.FOUND);
     }
 
@@ -45,20 +39,14 @@ public class MovieController {
     //working
     @PostMapping("/movies/add-director")
     public ResponseEntity addDirector(@RequestBody Director director){
-        String result = movieService.addDirector(director);
-        if(result.equals("Already there")){
-            return new ResponseEntity<>("Already there", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("Added", HttpStatus.CREATED);
+        movieService.addDirector(director);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
     //working
     @GetMapping("/movies/get-director-by-name/{name}")
     public ResponseEntity getDirectorByName(@PathVariable("name") String name){
         Director director = movieService.getDirectorByName(name);
-//        if(director == null){
-//            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
-//        }
         return new ResponseEntity<>(director, HttpStatus.FOUND);
     }
 
@@ -79,11 +67,8 @@ public class MovieController {
 
     @DeleteMapping("/movies/delete-director-by-name")
     public ResponseEntity deleteDirectorByName(@RequestParam("name") String name){
-        String result = movieService.deleteDirectorByName(name);
-        if(result.equals("Deleted")){
-            return new ResponseEntity<>("Deleted Successfully",HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<>("Invalid Input", HttpStatus.BAD_REQUEST);
+        movieService.deleteDirectorByName(name);
+        return new ResponseEntity<>("Success", HttpStatus.FOUND);
     }
 
     @DeleteMapping("/movies/delete-all-directors")
