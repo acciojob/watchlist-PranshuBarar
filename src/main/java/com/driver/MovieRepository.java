@@ -30,8 +30,8 @@ public class MovieRepository {
         return null;
     }
 
-    public List<String> findAllMovies(){
-        return new ArrayList<>(movieDB.keySet());
+    public List<Movie> findAllMovies(){
+        return new ArrayList<>(movieDB.values());
     }
 
     public String addDirector(Director director){
@@ -52,14 +52,7 @@ public class MovieRepository {
 
     //Pass movie name and director name as request parameters
     public void addMovieDirectorPair(String movieName, String directorName){
-        Movie movie = movieDB.get(movieName);
-
         if(pairDB.containsKey(directorName)){
-            for(String m : pairDB.get(directorName)){
-                if(m.equals(movieName)){
-                    return;
-                }
-            }
             List<String> list = pairDB.get(directorName);
             list.add(movieName);
             return;
@@ -75,10 +68,8 @@ public class MovieRepository {
     Return List of movies name(List()) wrapped in a ResponseEntity object
     Controller Name - getMoviesByDirectorName*/
     public List<String> getMoviesByDirectorName(String directorName){
-        if(!pairDB.containsKey(directorName)){
-            return new ArrayList<>();
-        }
-        return pairDB.get(directorName);
+        List<String> list = pairDB.get(directorName);
+        return list;
     }
 
     /*Delete a director and its movies from the records: DELETE /movies/delete-director-by-name
@@ -101,6 +92,14 @@ public class MovieRepository {
     (Note that there can be some movies on your watchlist that aren’t mapped to any of the director.
     Make sure you do not remove them.)*/
     public void deleteAllDirectors(){
+        for(List<String> movie : pairDB.values()){
+            for(String m : movie){
+                if(movieDB.containsKey(m)){
+                    movieDB.remove(m);
+                }
+            }
+        }
+
         if(!pairDB.isEmpty()){
             pairDB.clear();
         }
