@@ -30,7 +30,7 @@ public class MovieController {
     public ResponseEntity getMovieByName(@PathVariable("name") String name){
         Movie movie = movieService.getMovieByName(name);
         if(movie == null){
-            return new ResponseEntity<>("Movie not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(movie, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(movie, HttpStatus.FOUND);
     }
