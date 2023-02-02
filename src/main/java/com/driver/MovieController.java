@@ -72,10 +72,8 @@ public class MovieController {
     @GetMapping("/movies/get-movies-by-director-name/{director}")
     public ResponseEntity getMoviesByDirectorName(@PathVariable("director") String directorName){
         List<String> nameList = movieService.getMoviesByDirectorName(directorName);
-        if(nameList.size()==0){
-            return new ResponseEntity<>("No movies of the given Director", HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(nameList, HttpStatus.FOUND);
+
     }
 
     @DeleteMapping("/movies/delete-director-by-name")
