@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.DocFlavor;
 import java.util.List;
 
 @RestController
@@ -55,9 +56,9 @@ public class MovieController {
     @GetMapping("/movies/get-director-by-name/{name}")
     public ResponseEntity getDirectorByName(@PathVariable("name") String name){
         Director director = movieService.getDirectorByName(name);
-        if(director == null){
-            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
-        }
+//        if(director == null){
+//            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+//        }
         return new ResponseEntity<>(director, HttpStatus.FOUND);
     }
 

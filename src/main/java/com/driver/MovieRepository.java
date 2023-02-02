@@ -27,8 +27,8 @@ public class MovieRepository {
         return null;
     }
 
-    public List<Movie> findAllMovies(){
-        return new ArrayList<>(movieDB.values());
+    public List<String> findAllMovies(){
+        return new ArrayList<>(movieDB.keySet());
     }
 
     public String addDirector(Director director){
