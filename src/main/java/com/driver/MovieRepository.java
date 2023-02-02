@@ -3,10 +3,7 @@ package com.driver;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class MovieRepository {
@@ -92,20 +89,30 @@ public class MovieRepository {
     (Note that there can be some movies on your watchlist that aren’t mapped to any of the director.
     Make sure you do not remove them.)*/
     public void deleteAllDirectors(){
-        for(List<String> movie : pairDB.values()){
-            for(String m : movie){
-                if(movieDB.containsKey(m)){
-                    movieDB.remove(m);
-                }
-            }
+//        for(List<String> movie : pairDB.values()){
+//            for(String m : movie){
+//                if(movieDB.containsKey(m)){
+//                    movieDB.remove(m);
+//                }
+//            }
+//        }
+//
+//        if(!pairDB.isEmpty()){
+//            pairDB.clear();
+//        }
+//        if(!directorDB.isEmpty()){
+//            directorDB.clear();
+//        }
+        HashSet<String> moviesSet = new HashSet<>();
+
+        for(String director: pairDB.keySet()){
+            moviesSet.addAll(pairDB.get(director));
         }
 
-        if(!pairDB.isEmpty()){
-            pairDB.clear();
+        for(String movie: moviesSet){
+            pairDB.remove(movie);
         }
-        if(!directorDB.isEmpty()){
-            directorDB.clear();
-        }
+        pairDB.clear();
     }
 
 }
