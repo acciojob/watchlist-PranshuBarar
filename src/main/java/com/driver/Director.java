@@ -1,11 +1,15 @@
 package com.driver;
 
+//Director.java Class - String name, int numberOfMovies, double imdbRating,
+// no-args constructor, all-args constructor and getters-setters
+
 public class Director {
     private String name;
     private int numberOfMovies;
     private double imdbRating;
 
     public Director() {
+
     }
 
     public Director(String name, int numberOfMovies, double imdbRating) {
@@ -18,20 +22,20 @@ public class Director {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getNumberOfMovies() {
         return numberOfMovies;
     }
 
-    public void setNumberOfMovies(int numberOfMovies) {
-        this.numberOfMovies = numberOfMovies;
-    }
-
     public double getImdbRating() {
         return imdbRating;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumberOfMovies(int numberOfMovies) {
+        this.numberOfMovies = numberOfMovies;
     }
 
     public void setImdbRating(double imdbRating) {

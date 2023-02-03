@@ -9,41 +9,44 @@ import java.util.List;
 public class MovieService {
 
     @Autowired
+
     MovieRepository movieRepository;
 
-    public void addMovie(Movie movie) {
+    public void addMovie(Movie movie){
         movieRepository.addMovie(movie);
     }
 
-    public void addDirector(Director director) {
-        movieRepository.addDirector(director);
+    public Movie getMovieByName(String name){
+        return movieRepository.getMovieByName(name);
     }
 
-    public void addMovieDirectorPair(String movieName, String directorName) {
-        movieRepository.addMovieDirectorPair(movieName, directorName);
-    }
-
-    public Movie getMovieByName(String movieName) {
-        return movieRepository.getMovieByName(movieName);
-    }
-
-    public Director getDirectorByName(String directorName) {
-        return movieRepository.getDirectorByName(directorName);
-    }
-
-    public List<String> getMoviesByDirectorName(String directorName) {
-        return movieRepository.getMoviesByDirectorName(directorName);
-    }
-
-    public List<String> findAllMovies() {
+    public List<String> findAllMovies(){
         return movieRepository.findAllMovies();
     }
 
-    public void deleteDirectorByName(String directorName) {
-        movieRepository.deleteDirectorByName(directorName);
+    public void addDirector(Director director){
+        movieRepository.addDirector(director);
     }
 
-    public void deleteAllDirectors() {
+    public Director getDirectorByName(String name){
+        return movieRepository.getDirectorByName(name);
+    }
+
+    public void addMovieDirectorPair(String movieName, String directorName){
+        movieRepository.addMovieDirectorPair(movieName,directorName);
+    }
+
+    public List<String> getMoviesByDirectorName(String directorName){
+        return movieRepository.getMoviesByDirectorName(directorName);
+    }
+
+    public void deleteDirectorByName(String directorName){
+        movieRepository.deleteDirectorByName(directorName);
+
+    }
+
+    public void deleteAllDirectors(){
         movieRepository.deleteAllDirectors();
     }
+
 }
