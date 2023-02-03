@@ -1,123 +1,81 @@
 package com.driver;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
 public class MovieRepository {
-    Map<String,Movie> movieDB = new HashMap<>();
-    Map<String,Director> directorDB = new HashMap<>();
-    Map<String,List<String>> pairDB = new HashMap<>();
 
-    public void addMovie(Movie movie){
+
+    Map<String, Movie> dbMovie = new HashMap<>();
+    Map<String, Director> dbDirector = new HashMap<>();
+    HashMap<String, List<String>> movieDirectorDb = new HashMap<>();
+
+
+    public void addMovie(Movie movie) {
         String name = movie.getName();
-        movieDB.put(name,movie);
-
+        dbMovie.put(name, movie);
     }
 
-    public Movie getMovieByName(String name){
-        return movieDB.get(name);
-    }
-
-    public List<String> findAllMovies(){
-        return new ArrayList<>(movieDB.keySet());
-    }
-
-    public void addDirector(Director director){
+    public void addDirector(Director director) {
         String name = director.getName();
-        directorDB.put(name,director);
+        dbDirector.put(name, director);
     }
 
-    public Director getDirectorByName(String directorName){
-        return directorDB.get(directorName);
-    }
-
-    //Pass movie name and director name as request parameters
-    public void addMovieDirectorPair(String movieName, String directorName){
-//        if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
-//            if(pairDB.containsKey(directorName)){
-//                List<String> list = pairDB.get(directorName);
-//                list.add(movieName);
-//                return;
-//            }
-//            List<String> list = new ArrayList<>();
-//            list.add(movieName);
-//
-//            pairDB.put(directorName, list);
-//        }
-        if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
+    public void addMovieDirectorPair(String movieName, String directorName) {
+        if(dbMovie.containsKey(movieName) && dbDirector.containsKey(directorName)){
             List<String> currentMovies = new ArrayList<>();
-            if(pairDB.containsKey(directorName)) {
-                currentMovies = pairDB.get(directorName);
+            if(movieDirectorDb.containsKey(directorName)) {
+                currentMovies = movieDirectorDb.get(directorName);
             }
             currentMovies.add(movieName);
-            pairDB.put(directorName, currentMovies);
+            movieDirectorDb.put(directorName, currentMovies);
         }
-
     }
 
-    /*Get List of movies name for a given director name: GET /movies/get-movies-by-director-name/{director}
-    Pass director name as path parameter
-    Return List of movies name(List()) wrapped in a ResponseEntity object
-    Controller Name - getMoviesByDirectorName*/
-    public List<String> getMoviesByDirectorName(String directorName){
-        List<String> list = new ArrayList<>();
-        if(pairDB.containsKey(directorName)){
-            list = pairDB.get(directorName);
-        }
-        return list;
+    public Movie getMovieByName(String movieName) {
+        return dbMovie.get(movieName);
     }
 
-    /*Delete a director and its movies from the records: DELETE /movies/delete-director-by-name
-    Pass director’s name as request parameter
-    Return success message wrapped in a ResponseEntity object
-    Controller Name - deleteDirectorByName*/
-    public void deleteDirectorByName(String directorName){
-        List<String> movies;
-        if(pairDB.containsKey(directorName)){
-            movies = pairDB.get(directorName);
-            for(String movie : movies){
-                movieDB.remove(movie);
+    public Director getDirectorByName(String directorName) {
+        return dbDirector.get(directorName);
+    }
+
+    public List<String> getMoviesByDirectorName(String directorName) {
+        List<String> moviesList = new ArrayList<>();
+        if(movieDirectorDb.containsKey(directorName)){
+            moviesList = movieDirectorDb.get(directorName);
+        }
+        return moviesList;
+    }
+
+    public List<String> findAllMovies() {
+        return new ArrayList<>(dbMovie.keySet());
+    }
+
+    public void deleteDirectorByName(String directorName) {
+        List<String> movies ;
+        if(movieDirectorDb.containsKey(directorName)){
+            movies = movieDirectorDb.get(directorName);
+            for(String movie: movies){
+                dbMovie.remove(movie);
             }
-            pairDB.remove(directorName);
+            movieDirectorDb.remove(directorName);
         }
-        directorDB.remove(directorName);
-
+        dbDirector.remove(directorName);
     }
 
-    /*Delete all directors and all movies by them from the records: DELETE /movies/delete-all-directors
-    No params or body required
-    Return success message wrapped in a ResponseEntity object
-    Controller Name - deleteAllDirectors
-    (Note that there can be some movies on your watchlist that aren’t mapped to any of the director.
-    Make sure you do not remove them.)*/
-    public void deleteAllDirectors(){
-//        for(List<String> movie : pairDB.values()){
-//            for(String m : movie){
-//                if(movieDB.containsKey(m)){
-//                    movieDB.remove(m);
-//                }
-//            }
-//        }
-//
-//        if(!pairDB.isEmpty()){
-//            pairDB.clear();
-//        }
-//        if(!directorDB.isEmpty()){
-//            directorDB.clear();
-//        }
+    public void deleteAllDirectors() {
         HashSet<String> moviesSet = new HashSet<>();
 
-        for(String director: pairDB.keySet()){
-            moviesSet.addAll(pairDB.get(director));
+        for(String director: movieDirectorDb.keySet()){
+            moviesSet.addAll(movieDirectorDb.get(director));
         }
 
         for(String movie: moviesSet){
-            pairDB.remove(movie);
+            dbMovie.remove(movie);
         }
-        directorDB.clear();
+        dbDirector.clear();
     }
-
 }
