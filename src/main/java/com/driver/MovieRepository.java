@@ -94,30 +94,30 @@ public class MovieRepository {
     (Note that there can be some movies on your watchlist that aren’t mapped to any of the director.
     Make sure you do not remove them.)*/
     public void deleteAllDirectors(){
-//        for(List<String> movie : pairDB.values()){
-//            for(String m : movie){
-//                if(movieDB.containsKey(m)){
-//                    movieDB.remove(m);
-//                }
-//            }
+        for(List<String> movie : pairDB.values()){
+            for(String m : movie){
+                if(movieDB.containsKey(m)){
+                    movieDB.remove(m);
+                }
+            }
+        }
+
+        if(!pairDB.isEmpty()){
+            pairDB.clear();
+        }
+        if(!directorDB.isEmpty()){
+            directorDB.clear();
+        }
+//        HashSet<String> moviesSet = new HashSet<>();
+//
+//        for(String director: pairDB.keySet()){
+//            moviesSet.addAll(pairDB.get(director));
 //        }
 //
-//        if(!pairDB.isEmpty()){
-//            pairDB.clear();
+//        for(String movie: moviesSet){
+//            pairDB.remove(movie);
 //        }
-//        if(!directorDB.isEmpty()){
-//            directorDB.clear();
-//        }
-        HashSet<String> moviesSet = new HashSet<>();
-
-        for(String director: pairDB.keySet()){
-            moviesSet.addAll(pairDB.get(director));
-        }
-
-        for(String movie: moviesSet){
-            pairDB.remove(movie);
-        }
-        directorDB.clear();
+//        directorDB.clear();
     }
 
 }
