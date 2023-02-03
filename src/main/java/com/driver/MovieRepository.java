@@ -18,10 +18,7 @@ public class MovieRepository {
     }
 
     public Movie getMovieByName(String name){
-        if(movieDB.containsKey(name)){
-            return movieDB.get(name);
-        }
-        return null;
+        return movieDB.get(name);
     }
 
     public List<String> findAllMovies(){
@@ -34,10 +31,7 @@ public class MovieRepository {
     }
 
     public Director getDirectorByName(String directorName){
-        if(directorDB.containsKey(directorName)){
-            return directorDB.get(directorName);
-        }
-        return null;
+        return directorDB.get(directorName);
     }
 
     //Pass movie name and director name as request parameters
@@ -81,12 +75,11 @@ public class MovieRepository {
     Return success message wrapped in a ResponseEntity object
     Controller Name - deleteDirectorByName*/
     public void deleteDirectorByName(String directorName){
+        List<String> movies;
         if(pairDB.containsKey(directorName)){
-            List<String> movieList = pairDB.get(directorName);
-            for(String m : movieList){
-                if(movieDB.containsKey(m)){
-                    movieDB.remove(m);
-                }
+            movies = pairDB.get(directorName);
+            for(String movie : movies){
+                movieDB.remove(movie);
             }
             pairDB.remove(directorName);
         }
@@ -124,7 +117,7 @@ public class MovieRepository {
         for(String movie: moviesSet){
             pairDB.remove(movie);
         }
-        pairDB.clear();
+        directorDB.clear();
     }
 
 }
