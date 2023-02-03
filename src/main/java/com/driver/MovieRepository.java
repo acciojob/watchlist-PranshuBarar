@@ -47,15 +47,6 @@ public class MovieRepository {
 
             pairDB.put(directorName, list);
         }
-//        if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
-//            List<String> currentMovies = new ArrayList<>();
-//            if(pairDB.containsKey(directorName)) {
-//                currentMovies = pairDB.get(directorName);
-//            }
-//            currentMovies.add(movieName);
-//            pairDB.put(directorName, currentMovies);
-//        }
-
     }
 
     /*Get List of movies name for a given director name: GET /movies/get-movies-by-director-name/{director}
