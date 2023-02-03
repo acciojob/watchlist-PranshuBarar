@@ -36,25 +36,25 @@ public class MovieRepository {
 
     //Pass movie name and director name as request parameters
     public void addMovieDirectorPair(String movieName, String directorName){
-//        if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
-//            if(pairDB.containsKey(directorName)){
-//                List<String> list = pairDB.get(directorName);
-//                list.add(movieName);
-//                return;
-//            }
-//            List<String> list = new ArrayList<>();
-//            list.add(movieName);
-//
-//            pairDB.put(directorName, list);
-//        }
         if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
-            List<String> currentMovies = new ArrayList<>();
-            if(pairDB.containsKey(directorName)) {
-                currentMovies = pairDB.get(directorName);
+            if(pairDB.containsKey(directorName)){
+                List<String> list = pairDB.get(directorName);
+                list.add(movieName);
+                return;
             }
-            currentMovies.add(movieName);
-            pairDB.put(directorName, currentMovies);
+            List<String> list = new ArrayList<>();
+            list.add(movieName);
+
+            pairDB.put(directorName, list);
         }
+//        if(movieDB.containsKey(movieName) && directorDB.containsKey(directorName)){
+//            List<String> currentMovies = new ArrayList<>();
+//            if(pairDB.containsKey(directorName)) {
+//                currentMovies = pairDB.get(directorName);
+//            }
+//            currentMovies.add(movieName);
+//            pairDB.put(directorName, currentMovies);
+//        }
 
     }
 
@@ -108,16 +108,6 @@ public class MovieRepository {
         if(!directorDB.isEmpty()){
             directorDB.clear();
         }
-//        HashSet<String> moviesSet = new HashSet<>();
-//
-//        for(String director: pairDB.keySet()){
-//            moviesSet.addAll(pairDB.get(director));
-//        }
-//
-//        for(String movie: moviesSet){
-//            pairDB.remove(movie);
-//        }
-//        directorDB.clear();
     }
 
 }
